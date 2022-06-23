@@ -71,5 +71,31 @@ def toString(s: MyList[Char]): String =
       case MyCons(hd, tl) => go(sb.append(hd), tl)
   go(new StringBuilder(""), s)
 
+def clean[A](xs: MyList[A]): MyList[A] =
+  def go(xs: MyList[A], prev: A): MyList[A] =
+    xs match
+      case MyNil => MyNil
+      case MyCons(hd, tl) =>
+        if (hd != prev)
+          MyCons(hd, go(tl, hd))
+        else
+          go(tl, prev)
+  xs match
+    case MyNil => MyNil
+    case MyCons(hd, tl) => MyCons(hd, go(tl, hd))
+
+
+def getN[A](xs: MyList[A], n: Int): Option[A] =
+  foldRight(xs, (1, None): (Int, Option[A]))((a, b) => {
+    if (b._2.isEmpty)
+      val i = b._1
+      if (i == n)
+        (n, Some(a))
+      else
+        (i + 1, None)
+    else
+      b
+  })._2
+
 @main def run() =
   println("Hello")

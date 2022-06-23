@@ -50,4 +50,24 @@ class MyListSuite extends FunSuite {
     val actual = mapWithIndex(MyList(1,2,3,4,5), (x , y) => x + y)
     assertEquals(actual, expected)
   }
+  test("clean []") {
+    val expected = MyNil
+    val actual = clean(MyNil)
+    assertEquals(actual, expected)
+  }
+  test("clean [1,1,3,4,5,5,5,6]") {
+    val expected = MyList(1,3,4,5,6)
+    val actual = clean(MyList(1,1,3,4,5,5,5,6))
+    assertEquals(actual, expected)
+  }
+  test("getN [1,1,2,3,4,2,5,0] and 3") {
+    val expected = Some(2)
+    val actual = getN(MyList(1,1,2,3,4,2,5,0),3)
+    assertEquals(actual, expected)
+  }
+  test("getN [1,1,2,3,4,2,5,0] and 5") {
+    val expected = Some(3)
+    val actual = getN(MyList(1,1,2,3,4,2,5,0),5)
+    assertEquals(actual, expected)
+  }
 }
